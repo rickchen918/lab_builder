@@ -1,0 +1,145 @@
+# provison basic vcenter/vsphere environment 
+# create datacenter, management cluster/compute cluster 
+# register hosts to cluster respectively 
+# mount nfs storage to hosts 
+# assign vc license to vcenter 
+---
+- hosts: 127.0.0.1
+  tasks:
+# create vcenter datacenter 
+    - name: create datacenter 
+      local_action:
+        module: vmware_datacenter
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        datacenter_name: iot_dc
+        validate_certs: no 
+        state: present
+
+# create management cluster 
+    - name: create management cluster
+      local_action:
+        module: vmware_cluster
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        datacenter_name: iot_dc
+        cluster_name: mgmt
+        validate_certs: no
+        enable_drs: yes
+        state: present
+
+    - name: create compute cluster1
+      local_action:
+        module: vmware_cluster
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        cluster_name: comp1
+        datacenter_name: iot_dc
+        validate_certs: no
+        enable_drs: yes
+        state: present
+
+    - name: create compute cluster2
+      local_action:
+        module: vmware_cluster
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        cluster_name: comp2
+        datacenter_name: iot_dc
+        validate_certs: no
+        enable_drs: yes
+        state: present
+
+# add new vCenter license 
+    - name: add new vcenter license 
+      vcenter_license:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        license: "HA63Q-0R191-JZW29-310Q0-C2M1P"
+        validate_certs: no
+        state: present
+
+# add host 
+    - name: add host to mgmt cluster 
+      vmware_host:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        cluster_name: mgmt
+        datacenter_name: iot_dc
+        esxi_hostname: "{{ item }}"
+        esxi_username: "root"
+        esxi_password: "Nicira123$"
+        validate_certs: no
+        state: present 
+      loop:
+        - "192.168.0.240"
+
+    - name: add host to compute cluster1
+      vmware_host:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        cluster_name: comp1
+        datacenter_name: iot_dc
+        esxi_hostname: "{{ item }}"
+        esxi_username: "root"
+        esxi_password: "Nicira123$"
+        validate_certs: no
+        state: present
+      loop:
+        - "192.168.0.238"
+        - "192.168.0.239"
+
+    - name: add host to compute cluster2                                                                                
+      vmware_host:                                                                                                      
+        hostname: "iotvc.rkc.local"                                                                                     
+        username: "administrator@rkc.local"                                                                             
+        password: "Nicira123$"                                                                                          
+        cluster_name: comp2                                                                                         
+        datacenter_name: iot_dc                                                                                         
+        esxi_hostname: "{{ item }}"
+        esxi_username: "root"                                                                                           
+        esxi_password: "Nicira123$"
+        validate_certs: no                                                                                              
+        state: present                                                                                                  
+      loop:
+         - "192.168.0.241"                                                                                                
+         - "192.168.0.244"
+         - "192.168.0.213"
+         - "192.168.0.216"
+         - "192.168.0.232"
+         - "192.168.0.243"
+         - "192.168.0.244"   
+         - "192.168.0.229"               
+
+    - name: mount nfs datastore 
+      vmware_host_datastore:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        datacenter_name: iot_dc
+        datastore_name: "nsx_lab"
+        datastore_type: "nfs"
+        nfs_server: "192.168.0.96"
+        nfs_path: "/volume1/nsx_lab"
+        nfs_ro: no
+        esxi_hostname: "{{ item }}"
+        state: present 
+        validate_certs: no
+      loop:
+        - "192.168.0.238"
+        - "192.168.0.239"
+        - "192.168.0.240"
+        - "192.168.0.241"
+        - "192.168.0.244"
+        - "192.168.0.213"
+        - "192.168.0.216"
+        - "192.168.0.232"
+        - "192.168.0.229"
+        - "192.168.0.243"

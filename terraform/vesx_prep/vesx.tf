@@ -29,19 +29,22 @@ data "vsphere_network" "network65" {
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
+/* refer this vm template to clone vm */
 data "vsphere_virtual_machine" "template" {
-  name = "esx67_ready_template"
+/*  name = "esx67_ready_template" */
+  name = "esx65_ready_template"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
+/* create nested esx under cluster67 by linked clone */
 resource "vsphere_virtual_machine" "vm" {
-  count = 1
-  name = "vESX${count.index}"
+  count = 10
+  name = "iot-ESX${count.index}"
   resource_pool_id= "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus = 8
-  memory = 8096
+  memory = 16384
   guest_id = "vmkernel65Guest"
   wait_for_guest_net_timeout = 0
   nested_hv_enabled = true
