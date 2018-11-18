@@ -54,6 +54,18 @@
         enable_drs: yes
         state: present
 
+    - name: create compute cluster3
+      local_action:
+        module: vmware_cluster
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"                                                                                     
+        password: "Nicira123$"                                                                                                  
+        cluster_name: comp3                                                                                                     
+        datacenter_name: iot_dc                                                                                                 
+        validate_certs: no                                                                                                      
+        enable_drs: yes                                                                                                         
+        state: present  
+
 # add new vCenter license 
     - name: add new vcenter license 
       vcenter_license:
@@ -92,9 +104,10 @@
         esxi_password: "Nicira123$"
         validate_certs: no
         state: present
+#        state: absent
       loop:
-        - "192.168.0.238"
-        - "192.168.0.239"
+        - "192.168.0.181"
+        - "192.168.0.226"
 
     - name: add host to compute cluster2                                                                                
       vmware_host:                                                                                                      
@@ -108,15 +121,27 @@
         esxi_password: "Nicira123$"
         validate_certs: no                                                                                              
         state: present                                                                                                  
+#        state: absent
       loop:
-         - "192.168.0.241"                                                                                                
-         - "192.168.0.244"
-         - "192.168.0.213"
-         - "192.168.0.216"
-         - "192.168.0.232"
-         - "192.168.0.243"
-         - "192.168.0.244"   
-         - "192.168.0.229"               
+        - "192.168.0.234"
+        - "192.168.0.219"
+
+    - name: add host to compute cluster3                                                                                        
+      vmware_host:                                                                                                              
+        hostname: "iotvc.rkc.local"                                                                                             
+        username: "administrator@rkc.local"                                                                                     
+        password: "Nicira123$"                                                                                                  
+        cluster_name: comp3                                                                                                     
+        datacenter_name: iot_dc                                                                                                 
+        esxi_hostname: "{{ item }}"                                                                                             
+        esxi_username: "root"                                                                                                   
+        esxi_password: "Nicira123$"                                                                                             
+        validate_certs: no                                                                                                      
+        state: present                                                                                                         
+#        state: absent                                                                                                           
+      loop:                                                                                                                     
+        - "192.168.0.220"                                                                                                       
+        - "192.168.0.206" 
 
     - name: mount nfs datastore 
       vmware_host_datastore:
@@ -133,13 +158,10 @@
         state: present 
         validate_certs: no
       loop:
-        - "192.168.0.238"
-        - "192.168.0.239"
+        - "192.168.0.181"
+        - "192.168.0.226"
+        - "192.168.0.234"
+        - "192.168.0.219"
+        - "192.168.0.220"
+        - "192.168.0.206"
         - "192.168.0.240"
-        - "192.168.0.241"
-        - "192.168.0.244"
-        - "192.168.0.213"
-        - "192.168.0.216"
-        - "192.168.0.232"
-        - "192.168.0.229"
-        - "192.168.0.243"

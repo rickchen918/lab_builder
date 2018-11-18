@@ -1,0 +1,23 @@
+
+---
+- hosts: 127.0.0.1
+  vars:
+    hostname: vc.rkc.local
+    username: "administrator@rkc.local"
+    password: "Nicira123$"
+    datacenter: "Home"
+# state option is "present", "absent", "revert", "remove_all...
+# more info refers https://docs.ansible.com/ansible/2.6/modules/vmware_guest_snapshot_module.html\
+
+  tasks:
+    - name: find folder
+      vmware_guest_find:
+        hostname: "{{ hostname }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        name: "iot-ctr1"
+        validate_certs: no 
+      register: vm 
+    - debug:
+        var: vm
+

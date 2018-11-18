@@ -1,0 +1,43 @@
+
+---
+- hosts: 127.0.0.1
+  vars:
+    hostname: vc.rkc.local
+    username: "administrator@rkc.local"
+    password: "Nicira123$"
+    datacenter: Home
+    snapshot_name: 2
+    state: revert
+# state option is "present", "absent", "revert", "remove_all...
+# more info refers https://docs.ansible.com/ansible/2.6/modules/vmware_guest_snapshot_module.html\
+
+  tasks:
+    - name: revert snapshot
+      vmware_guest_snapshot:
+        hostname: "{{ hostname }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        datacenter: "{{ datacenter }}" 
+        snapshot_name: "{{ snapshot_name }}"
+        folder: "/Home/vm/iot"
+#        folder: / "{{ datacenter }}"/vm
+        name: "{{ item }}"
+        validate_certs: no 
+        state: revert 
+      with_items:
+        - iot-ESX0
+        - iot-ESX1
+        - iot-ESX2
+        - iot-ESX3
+        - iot-ESX4
+        - iot-ESX5
+        - iot-ESX6
+        - iot-nsxmgr
+        - iotvc
+        - iot-ctr1
+        - iot-ctr2
+        - iot-ctr3
+        - iot-edge1
+        - iot-edge2
+        - iot-edge3
+
