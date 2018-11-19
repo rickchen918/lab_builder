@@ -20,7 +20,7 @@ data "vsphere_compute_cluster" "cluster" {
 }
 
 data "vsphere_network" "network" {
-  name = "VM Network"
+  name = "home_mgmt"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -38,7 +38,7 @@ data "vsphere_virtual_machine" "template" {
 
 /* create nested esx under cluster67 by linked clone */
 resource "vsphere_virtual_machine" "vm" {
-  count = 10
+  count = 7
   name = "iot-ESX${count.index}"
   resource_pool_id= "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id = "${data.vsphere_datastore.datastore.id}"
@@ -51,6 +51,8 @@ resource "vsphere_virtual_machine" "vm" {
 
   network_interface {
     network_id = "${data.vsphere_network.network.id}"
+    use_static_mac = true
+    mac_address = "00:50:56:01:02:0${count.index}"
   }
 
   network_interface {
