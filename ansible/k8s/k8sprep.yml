@@ -1,0 +1,313 @@
+---
+# this installation flow is upon conatainer plugin 2.3.1 and ubuntu OS
+
+- hosts: 192.168.0.130
+  tasks:
+    - name: check nic configuration for api
+      shell: cat /etc/network/interfaces |grep ens
+      register: int
+      tags: ip 
+
+    - name: configure api interface 
+      shell: "echo {{item}} >> /etc/network/interfaces"                                                                         
+      with_items:                                                                                                               
+        - "# the k8s api interface"                                                                                  
+        - auto ens192                                                                                                     
+        - iface ens192 inet static                                                                                        
+        - address 192.168.90.130
+        - netmask 255.255.255.0
+        - dns-nameservers 192.168.0.96
+      when: int.stdout.find("ens192") == -1
+      tags: ip
+
+    - name: add static route 
+      shell: "{{item}}"
+      with_items: 
+        - systemctl restart networking.service
+        - ip route add 192.168.64.0/18 via 192.168.90.1 
+      tags: ip
+
+    - name: chnage hostname
+      shell: echo "k8s-master0" > /etc/hostname
+      tags: hostname
+
+- hosts: 192.168.0.131
+  tasks:
+    - name: check nic configuration for api
+      shell: cat /etc/network/interfaces |grep ens
+      register: int
+      tags: ip
+
+    - name: configure api interface
+      shell: "echo {{item}} >> /etc/network/interfaces"
+      with_items:
+        - "# the k8s api interface"
+        - auto ens192
+        - iface ens192 inet static
+        - address 192.168.90.131
+        - netmask 255.255.255.0
+        - dns-nameservers 192.168.0.96
+      when: int.stdout.find("ens192") == -1
+      tags: ip
+
+    - name: add static route
+      shell: "{{item}}"
+      with_items:
+        - systemctl restart networking.service
+        - ip route add 192.168.64.0/18 via 192.168.90.1
+      tags: ip
+
+    - name: chnage hostname
+      shell: echo "k8s-master1" > /etc/hostname
+      tags: hostname
+
+- hosts: 192.168.0.132
+  tasks:
+    - name: check nic configuration for api
+      shell: cat /etc/network/interfaces |grep ens
+      register: int
+      tags: ip
+
+    - name: configure api interface
+      shell: "echo {{item}} >> /etc/network/interfaces"
+      with_items:
+        - "# the k8s api interface"
+        - auto ens192
+        - iface ens192 inet static
+        - address 192.168.90.132
+        - netmask 255.255.255.0
+        - dns-nameservers 192.168.0.96
+      when: int.stdout.find("ens192") == -1
+      tags: ip
+
+    - name: add static route
+      shell: "{{item}}"
+      with_items:
+        - systemctl restart networking.service
+        - ip route add 192.168.64.0/18 via 192.168.90.1
+      tags: ip
+
+    - name: chnage hostname 
+      shell: echo "k8s-master2" > /etc/hostname
+      tags: hostname
+
+#- hosts: 192.168.0.133
+#  tasks:
+#    - name: check nic configuration for api
+#      shell: cat /etc/network/interfaces |grep ens
+#      register: int
+#      tags: ip
+#
+#    - name: configure api interface
+#      shell: "echo {{item}} >> /etc/network/interfaces"
+#      with_items:
+#        - "# the k8s api interface"
+#        - auto ens192
+#        - iface ens192 inet static
+#        - address 192.168.90.133
+#        - netmask 255.255.255.0
+#        - dns-nameservers 192.168.0.96
+#      when: int.stdout.find("ens192") == -1
+#      tags: ip
+
+#    - name: add static route
+#      shell: "{{item}}"
+#      with_items:
+#        - systemctl restart networking.service
+#        - ip route add 192.168.64.0/18 via 192.168.90.1
+#      tags: ip
+
+#- hosts: 192.168.0.134
+#  tasks:
+#    - name: check nic configuration for api
+#      shell: cat /etc/network/interfaces |grep ens
+#      register: int
+#      tags: ip
+
+#    - name: configure api interface
+#      shell: "echo {{item}} >> /etc/network/interfaces"
+#      with_items:
+#        - "# the k8s api interface"
+#        - auto ens192
+#        - iface ens192 inet static
+#        - address 192.168.90.134
+#        - netmask 255.255.255.0
+#        - dns-nameservers 192.168.0.96
+#      when: int.stdout.find("ens192") == -1
+#      tags: ip
+
+#    - name: add static route
+#      shell: "{{item}}"
+#      with_items:
+#        - systemctl restart networking.service
+#        - ip route add 192.168.64.0/18 via 192.168.90.1
+#      tags: ip
+
+
+- hosts: all
+  vars:
+    url: http://192.168.0.69:8000
+    zipname: nsx-container-2.3.1.10693410.zip
+    folder: nsx-container-2.3.1.10693410
+    ovsint: ens224
+  tasks:
+    - name: apt update 
+      shell: apt-get update && apt-get install -y apt-transport-https curl
+      args:
+        warn: false
+
+    - name: check apt key existing on packages.cloud.google.com
+      command: apt-key list 
+      register: key_google
+      args:
+        warn: false
+
+    - name: verify key existing
+      shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add 
+      when: key_google.stdout.find("Google Cloud Packages Automatic Signing Key") == -1
+
+    - name: update kubernetes source list 
+      shell: echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+
+    - name: apt update again 
+      command: apt-get update
+      args:
+        warn: false
+
+    - name: install kubeadm packages 
+      apt:
+        name:
+        - kubelet=1.11.5-00 
+        - kubeadm=1.11.5-00
+        - kubectl=1.11.5-00
+        - docker.io
+        - python2.7
+        - python-pip
+        - python-dev
+        - python-six
+        - build-essential
+        - dkms
+        - unzip
+        state: present
+        
+    - name: apt-mark hold
+      shell: apt-mark hold kubelet kubeadm kubectl
+      args:
+        warn: false
+
+    - name: empty /etc/hosts configuration 
+      shell: "> /etc/hosts"
+      tags: echo
+
+    - name: create host file 
+      shell: echo "{{item}}" >> /etc/hosts
+      with_items:
+        - "192.168.90.130 k8s-master0"
+        - "192.168.90.131 k8s-master1"
+        - "192.168.90.132 k8s-master2"
+        - "192.168.90.133 k8s-node1"
+        - "192.168.90.134 k8s-node2"
+      tags: echo
+        
+
+    - name: verify nsx container package existence 
+      shell: ls ./
+      register: nsxpkg
+
+    - name: download nsx container package 
+      shell: wget "{{url}}"/"{{zipname}}"
+      when: nsxpkg.stdout.find('nsx-container') == -1
+
+    - name: verify package is been unarchived 
+      shell: ls /tmp
+      register: nsxarchive
+
+    - name: unarchive nsx container zip to local folder 
+      unarchive:
+        src: "{{zipname}}"
+        dest: /tmp
+        remote_src: yes
+      when: nsxarchive.stdout.find('nsx-container') == -1
+
+    - name: check nsx package existence 
+      shell: dpkg -l |grep open
+      register: ovs
+
+    - name: install nsx k8s ovs package 
+      raw: dpkg -i /tmp/"{{folder}}"/OpenvSwitch/xenial_amd64/*.deb
+      when: 
+        - ovs.stdout.find('openvswitch-common') == -1
+        - ovs.stdout.find('openvswitch-switch') == -1
+        - ovs.stdout.find('openvswitch-datapath-dkms') == -1
+
+    - name: reloead openvswitch kernel module 
+      raw: service openvswitch-switch force-reload-kmod
+
+    - name: check ovs bridge configured
+      command: ovs-vsctl show 
+      register: ovs_show
+
+    - name: configure ovs if configuration is not
+      command: "ovs-vsctl {{item}}"
+      with_items: 
+        - add-br br-int 
+        - set-fail-mode br-int standalone
+        - add-port br-int "{{ovsint}}"
+        - set Interface "{{ovsint}}" ofport=1
+      when:
+        - ovs_show.stdout.find("standalone") == -1
+        - ovs_show.stdout.find("ens") == -1
+
+    - name: check network interface configuration 
+      command: cat /etc/network/interfaces
+      register: int_file
+
+    - name: configure /etc/network/interface 
+      shell: "echo {{item}} >> /etc/network/interfaces"
+      with_items:
+        - "# the ovs interface for nsx bridge"
+        - auto "{{ovsint}}"
+        - iface "{{ovsint}}" inet manual
+        - up ip link set "{{ovsint}}" up
+      args:
+        warn: false
+      when: int_file.stdout.find("{{ovsint}}") == -1 
+
+    - name: check ovs interface stats 
+      shell: ip link 
+      register: ovs_link
+
+    - name: bring "{{ovsint}}" up 
+      shell: ifup "{{ovsint}}"
+      when: ovs_link.stdout.find("ovs-system state UP") == -1
+
+    - name: check nsx cni plugin install
+      shell: dpkg -l |grep "cni"
+      register: nsx_cni
+
+    - name: Install nsx cni plugin 
+      raw: dpkg -i /tmp/"{{folder}}"/Kubernetes/ubuntu_amd64/*.deb
+      when: nsx_cni.stdout.find("nsx-cni") == -1
+
+    - name: disable linux swap
+      shell: "{{item}}"
+      with_items:
+        - sed -i /swap/s/^/#/ /etc/fstab
+        - swapoff -a
+
+    - name: Install ncp docker images
+      shell: docker load -i /tmp/nsx-container-2.3.1.10693410/Kubernetes/nsx-ncp-ubuntu-2.3.1.10693410.tar
+      register: docker
+
+    - name: check ncp image name and register to var
+      shell: docker images |grep ncp |awk {'print $1}'
+      register: image
+      tags: image
+
+    - debug:
+        var: image.stdout_lines[0]
+      tags: image
+
+    - name: tag ncp docker image to nsx-ncp 
+      shell: docker tag {{image.stdout_lines[0]}} nsx-ncp
+      tags: image

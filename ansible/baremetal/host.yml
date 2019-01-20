@@ -1,0 +1,8 @@
+[dhcp]
+192.168.0.[160:254] ansible_ssh_user=root  ansible_ssh_pass=nicira123 ansible_sudo=yes
+
+[baremetal]
+192.168.0.133 ansible_ssh_user=root  ansible_ssh_pass=nicira123 ansible_sudo=yes
+192.168.0.134 ansible_ssh_user=root  ansible_ssh_pass=nicira123 ansible_sudo=yes
+
+

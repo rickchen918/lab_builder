@@ -1,0 +1,9 @@
+[master]
+192.168.0.[130:132] ansible_ssh_user=root  ansible_ssh_pass=nicira123 ansible_sudo=yes
+
+
+#[node]
+#192.168.0.[133:134] ansible_ssh_user=root  ansible_ssh_pass=nicira123 ansible_sudo=yes
+
+[all]
+192.168.0.[130:132] ansible_ssh_user=root  ansible_ssh_pass=nicira123 ansible_sudo=yes

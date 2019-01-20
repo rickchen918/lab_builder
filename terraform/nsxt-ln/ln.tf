@@ -5,6 +5,7 @@ variable "t0_name" {}
 variable "tz" {}
 variable "edgecluster" {}
 variable "count" {}
+#variable count "{count=3}
 
 provider "nsxt" {
   host = "${var.nsx_manager}"
@@ -68,5 +69,5 @@ resource "nsxt_logical_router_downlink_port" "downlink_port" {
   display_name = "link to logical switch ${count.index}"
   logical_router_id = "${element(nsxt_logical_tier1_router.t1.*.id,count.index)}"
   linked_logical_switch_port_id = "${element(nsxt_logical_port.logical_port1.*.id,count.index)}"
-  ip_address = "192.168.${count.index}.1/24"
+  ip_address = "192.17.${count.index}.1/24"
 }

@@ -1,0 +1,22 @@
+---
+m1:
+  name: nsx24-mgr1
+  ip: 192.168.0.140
+
+m2:
+  name: nsx24-mgr2
+  ip: 192.168.0.141
+
+m3:
+  name: nsx24-mgr3
+  ip: 192.168.0.142
+
+common:
+  mask: 255.255.255.0
+  gw: 192.168.0.1
+  ntp: time.stdtime.gov.tw
+  dns: 192.168.0.96
+  user: admin
+  password: Nicira123$
+  size: small
+  

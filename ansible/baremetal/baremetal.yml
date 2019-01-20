@@ -1,0 +1,72 @@
+---
+- hosts: 192.168.0.133
+  tasks:
+    - name: echo hostname
+      shell: echo "{{item}}" > /etc/hostname                                                                                                                       
+      with_items:                                                                                                                                                  
+        - "nsx-baremetal0"                                                                                                                                         
+      tags: echo                                                                                                                                                   
+                                                                                                                                                                   
+    - name: create host file                                                                                                                                       
+      shell: echo "{{item}}" > /etc/hosts                                                                                                                          
+      with_items:                                                                                                                                                  
+        - "192.168.0.133 nsx-baremetal0"                                                                                                                           
+      tags: echo  
+
+- hosts: 192.168.0.134
+  tasks:
+    - name: echo hostname
+      shell: echo "{{item}}" > /etc/hostname
+      with_items:
+        - "nsx-baremetal1"
+      tags: echo
+
+    - name: create host file
+      shell: echo "{{item}}" > /etc/hosts
+      with_items:
+        - "192.168.0.133 nsx-baremetal1"
+      tags: echo
+
+- hosts: baremetal
+  tasks:
+    - name: install 3rd party packages 
+      apt:
+        name:
+        - qemu-kvm
+        - libvirt-bin
+        - virtinst
+        - virt-manager
+        - virt-viewer
+        - ubuntu-vm-builder
+        - bridge-utils
+
+    - name: install dependency packages 
+      apt:
+        name:
+        - libgflags2v5
+        - libgoogle-perftools4
+        - traceroute
+        - python-mako
+        - python-simplejson
+        - python-unittest2
+        - python-yaml
+        - python-netaddr
+        - libprotobuf9v5
+        - libboost-chrono1.58.0
+        - libgoogle-glog0v5
+        - dkms
+        - libboost-date-time1.58.0
+        - libleveldb1v5
+        - libsnappy1v5
+        - python-gevent
+        - python-protobuf
+        - ieee-data
+        - libyaml-0-2
+        - python-linecache2
+        - python-traceback2
+        - libtcmalloc-minimal4
+        - python-greenlet
+        - python-markupsafe
+        - libboost-program-options1.58.0
+        state: present
+    

@@ -36,12 +36,12 @@ data "vsphere_network" "network" {
 
 /* refer this vm template to clone vm */
 data "vsphere_virtual_machine" "template" {
-  name = "iot_vm_template"
+  name = "vm_template"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 resource "vsphere_virtual_machine" "vm1" {
-  count = 6
+  count = 2
   name = "iot-vm1${count.index}"
   resource_pool_id= "${data.vsphere_compute_cluster.cluster1.resource_pool_id}"
   datastore_id = "${data.vsphere_datastore.datastore.id}"
@@ -67,7 +67,7 @@ resource "vsphere_virtual_machine" "vm1" {
 }
 
 resource "vsphere_virtual_machine" "vmi2" {
-  count = 3
+  count = 0
   name = "iot-vm2${count.index}"
   resource_pool_id= "${data.vsphere_compute_cluster.cluster2.resource_pool_id}"
   datastore_id = "${data.vsphere_datastore.datastore.id}"
@@ -93,7 +93,7 @@ resource "vsphere_virtual_machine" "vmi2" {
 }
 
 resource "vsphere_virtual_machine" "vmi3" {                                                                                     
-  count = 3                                                                                                                     
+  count = 0                                                                                                                    
   name = "iot-vm3${count.index}"                                                                                                
   resource_pool_id= "${data.vsphere_compute_cluster.cluster3.resource_pool_id}"                                                 
   datastore_id = "${data.vsphere_datastore.datastore.id}"                                                                       

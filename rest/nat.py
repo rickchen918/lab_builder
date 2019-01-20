@@ -38,4 +38,7 @@ body="""{
 
 conn=requests.post(url,verify=False,headers=header,data=body)
 
-print(conn.text)
+if conn.status_code == 201:
+    result = json.loads(conn.text).get('id')
+    print ("the rule "+result+" is created ",arg.dest_ip ,arg.dest_port, arg.translated_ip, arg.translated_port)
+
