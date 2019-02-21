@@ -31,7 +31,7 @@ data "vsphere_network" "network65" {
 
 /* refer this vm template to clone vm */
 data "vsphere_virtual_machine" "template" {
-  name = "esx67_ready_template" 
+  name = "esx67ep6_ready_template" 
 /*  name = "esx65_ready_template" */
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
@@ -61,7 +61,7 @@ resource "vsphere_virtual_machine" "vm" {
 
   disk {
     label = "disk0"
-    size = 40
+    size = 120
   }
   clone {
     template_uuid = "${data.vsphere_virtual_machine.template.id}"

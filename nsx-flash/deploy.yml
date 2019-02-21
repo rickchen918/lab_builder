@@ -5,116 +5,149 @@
   tasks: 
     - name: deploy nsx manager1
       command: ovftool 
-        --name={{m1_hostname}}
+        --name={{m1.name}}
         --X:injectOvfEnv 
         --X:logFile=ovftool.log
         --allowExtraConfig 
-        --datastore={{datastore}}
+        --datastore={{common.datastore}}
         --network="home_mgmt" 
         --acceptAllEulas 
         --noSSLVerify 
         --diskMode=thin 
         --powerOn 
-        --prop:nsx_role={{role}}
+        --prop:nsx_role="{{common.role}}"
         --prop:nsx_ip_0={{m1.ip}}
-        --prop:nsx_netmask_0={{mask}}
-        --prop:nsx_gateway_0={{gateway}} 
-        --prop:nsx_dns1_0={{dns}} 
+        --prop:nsx_netmask_0={{common.mask}}
+        --prop:nsx_gateway_0={{common.gw}} 
+        --prop:nsx_dns1_0={{common.dns}} 
         --prop:nsx_domain_0=rkc.local 
-        --prop:nsx_ntp_0={{ntp}} 
+        --prop:nsx_ntp_0={{common.ntp}} 
         --prop:nsx_isSSHEnabled=True 
         --prop:nsx_allowSSHRootLogin=True
-        --prop:nsx_passwd_0={{password}} 
-        --prop:nsx_cli_passwd_0={{password}} 
-        --prop:nsx_hostname={{m1.hostname}}
-        /mnt/Software/VMware/NSX/2.4Beta-FL/rtqa28/nsx-unified-appliance-2.4.0.0.0.11776903.ova
+        --prop:nsx_passwd_0={{common.password}} 
+        --prop:nsx_cli_passwd_0={{common.password}} 
+        --prop:nsx_hostname={{m1.name}}
+        --prop:nsx_cli_audit_passwd_0={{common.password}}
+        "{{common.image}}"
         vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
-      tags: mgr1
+      tags: mgr
 
-    - name: deploy nsx manager2
+    - name: depploy nsx manager2
       command: ovftool
-        --name={{m2_hostname}}
+        --name={{m2.name}}
         --X:injectOvfEnv
         --X:logFile=ovftool.log
         --allowExtraConfig
-        --datastore={{datastore}}
+        --datastore={{common.datastore}}
         --network="home_mgmt"
         --acceptAllEulas
         --noSSLVerify
         --diskMode=thin
         --powerOn
-        --prop:nsx_role={{role}}
-        --prop:nsx_ip_0={{m2_ip}}
-        --prop:nsx_netmask_0={{mask}}
-        --prop:nsx_gateway_0={{gateway}}
-        --prop:nsx_dns1_0={{dns}}
+        --prop:nsx_role="{{common.role}}"
+        --prop:nsx_ip_0={{m2.ip}}
+        --prop:nsx_netmask_0={{common.mask}}
+        --prop:nsx_gateway_0={{common.gw}}
+        --prop:nsx_dns1_0={{common.dns}}
         --prop:nsx_domain_0=rkc.local
-        --prop:nsx_ntp_0={{ntp}}
+        --prop:nsx_ntp_0={{common.ntp}}
         --prop:nsx_isSSHEnabled=True
         --prop:nsx_allowSSHRootLogin=True
-        --prop:nsx_passwd_0={{password}}
-        --prop:nsx_cli_passwd_0={{password}}
-        --prop:nsx_hostname={{m2_hostname}}
-        /mnt/Software/VMware/NSX/2.4Beta-FL/rtqa28/nsx-unified-appliance-2.4.0.0.0.11776903.ova
+        --prop:nsx_passwd_0={{common.password}}
+        --prop:nsx_cli_passwd_0={{common.password}}
+        --prop:nsx_hostname={{m2.name}}
+        --prop:nsx_cli_audit_passwd_0={{common.password}}
+        "{{common.image}}"
         vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
+      tags: mgr2
 
     - name: deploy nsx manager3
       command: ovftool
-        --name={{m3_hostname}}
+        --name={{m3.name}}
         --X:injectOvfEnv
         --X:logFile=ovftool.log
         --allowExtraConfig
-        --datastore={{datastore}}
+        --datastore={{common.datastore}}
         --network="home_mgmt"
         --acceptAllEulas
         --noSSLVerify
         --diskMode=thin
         --powerOn
-        --prop:nsx_role={{role}}
-        --prop:nsx_ip_0={{m3_ip}}
-        --prop:nsx_netmask_0={{mask}}
-        --prop:nsx_gateway_0={{gateway}}
-        --prop:nsx_dns1_0={{dns}}
+        --prop:nsx_role="{{common.role}}"
+        --prop:nsx_ip_0={{m3.ip}}
+        --prop:nsx_netmask_0={{common.mask}}
+        --prop:nsx_gateway_0={{common.gw}}
+        --prop:nsx_dns1_0={{common.dns}}
         --prop:nsx_domain_0=rkc.local
-        --prop:nsx_ntp_0={{ntp}}
+        --prop:nsx_ntp_0={{common.ntp}}
         --prop:nsx_isSSHEnabled=True
         --prop:nsx_allowSSHRootLogin=True
-        --prop:nsx_passwd_0={{password}}
-        --prop:nsx_cli_passwd_0={{password}}
-        --prop:nsx_hostname={{m3_hostname}}
-        /mnt/Software/VMware/NSX/2.4Beta-FL/rtqa28/nsx-unified-appliance-2.4.0.0.0.11776903.ova
+        --prop:nsx_passwd_0={{common.password}}
+        --prop:nsx_cli_passwd_0={{common.password}}
+        --prop:nsx_hostname={{m3.name}}
+        --prop:nsx_cli_audit_passwd_0={{common.password}}
+        "{{common.image}}"
         vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
+      tags: mgr2
 
-- hosts: manager1
-  vars_files:
-    - ./var.yml
-  tasks:
-    - name: get cluster id on manager1 
-      raw: nsxcli -c get cluster config |grep "Cluster Id" |awk '{print $3}'
-      register: uuid
-      tags: config
+    - name: deploy nsx edge1
+      command: ovftool
+        --name={{e1.name}}
+        --deploymentOption=large
+        --X:injectOvfEnv 
+        --X:logFile=ovftool.log 
+        --allowExtraConfig 
+        --datastore={{common.datastore}}
+        --net:"Network 0=home_mgmt" 
+        --net:"Network 1=Trunk" 
+        --net:"Network 2=Trunk"  
+        --net:"Network 3=Trunk"  
+        --acceptAllEulas 
+        --noSSLVerify 
+        --diskMode=thin 
+        --powerOn 
+        --prop:nsx_ip_0={{e1.ip}} 
+        --prop:nsx_netmask_0={{common.mask}} 
+        --prop:nsx_gateway_0={{common.gw}} 
+        --prop:nsx_dns1_0={{common.dns}}
+        --prop:nsx_domain_0=rkc.local
+        --prop:nsx_ntp_0={{common.ntp}}  
+        --prop:nsx_isSSHEnabled=True 
+        --prop:nsx_allowSSHRootLogin=True 
+        --prop:nsx_passwd_0={{common.password}} 
+        --prop:nsx_cli_passwd_0={{common.password}} 
+        --prop:nsx_hostname={{e1.name}}
+        "{{common.edgeimage}}"
+        vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
+      tags: edge
 
-    - debug:
-        var: uuid.stdout_lines[0]
-      tags: config
-
-    - name: get manager1 thumbprint 
-      raw: nsxcli -c get certificate api thumbprint 
-      register: thumb
-      tags: config 
-   
-    - debug:
-        var: thumb.stdout_lines[0]
-      tags: config
-
-- hosts: manager2
-  vars_files:
-    - ./var.yml
-  tasks:
-    - name: join nsx cluster on manager2
-      raw: nsxcli -c join {{m1.ip}} cluster-id {{uuid.stdout_lines[0]}} username admin password "Nicira123$Nicira123$" thumbprint {{thumb.stdout_lines[0]}} 
-      tags: config
-
-    - name: join nsx cluster on manager3
-      raw: nsxcli -c join {{m1.ip}} cluster-id {{uuid.stdout_lines[0]}} username admin password "Nicira123$Nicira123$" thumbprint {{thumb.stdout_lines[0]}}
-      tags: config
+    - name: deploy nsx edge2
+      command: ovftool
+        --name={{e2.name}}
+        --deploymentOption=large
+        --X:injectOvfEnv 
+        --X:logFile=ovftool.log 
+        --allowExtraConfig 
+        --datastore={{common.datastore}}
+        --net:"Network 0=home_mgmt" 
+        --net:"Network 1=Trunk" 
+        --net:"Network 2=Trunk"  
+        --net:"Network 3=Trunk"  
+        --acceptAllEulas 
+        --noSSLVerify 
+        --diskMode=thin 
+        --powerOn 
+        --prop:nsx_ip_0={{e2.ip}} 
+        --prop:nsx_netmask_0={{common.mask}} 
+        --prop:nsx_gateway_0={{common.gw}} 
+        --prop:nsx_dns1_0={{common.dns}}
+        --prop:nsx_domain_0=rkc.local
+        --prop:nsx_ntp_0={{common.ntp}}  
+        --prop:nsx_isSSHEnabled=True 
+        --prop:nsx_allowSSHRootLogin=True 
+        --prop:nsx_passwd_0={{common.password}} 
+        --prop:nsx_cli_passwd_0={{common.password}} 
+        --prop:nsx_hostname={{e2.name}}
+        "{{common.edgeimage}}"
+        vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
+      tags: edge

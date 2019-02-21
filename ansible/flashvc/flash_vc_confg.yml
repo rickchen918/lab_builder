@@ -1,0 +1,146 @@
+# provison basic vcenter/vsphere environment 
+# create datacenter, management cluster/compute cluster 
+# register hosts to cluster respectively 
+# mount nfs storage to hosts 
+# assign vc license to vcenter 
+---
+- hosts: 127.0.0.1
+  vars:
+    datacenter: flash_dc
+    mgtcluster: flash_mgmt
+    compcluster: flash_compute
+    v2tcluster: v2tcluster
+    
+
+  tasks:
+# create vcenter datacenter 
+    - name: create datacenter 
+      local_action:
+        module: vmware_datacenter
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        datacenter_name: "{{datacenter}}"
+        validate_certs: no 
+        state: present
+
+# create management cluster 
+    - name: create management cluster
+      local_action:
+        module: vmware_cluster
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        datacenter_name: "{{datacenter}}"
+        cluster_name: "{{mgtcluster}}"
+        validate_certs: no
+        enable_drs: yes
+        state: present
+
+    - name: create compute cluster
+      local_action:
+        module: vmware_cluster
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        cluster_name: comp1
+        datacenter_name: "{{datacenter}}"
+        cluster_name: "{{compcluster}}"
+        validate_certs: no
+        enable_drs: yes
+        state: present
+
+    - name: create compute cluster
+      local_action:
+        module: vmware_cluster
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        datacenter_name: "{{datacenter}}"
+        cluster_name: "{{v2tcluster}}"
+        validate_certs: no
+        enable_drs: yes
+        state: present
+
+# add new vCenter license 
+    - name: add new vcenter license 
+      vcenter_license:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        license: "HA63Q-0R191-JZW29-310Q0-C2M1P"
+        validate_certs: no
+        state: present
+
+# add host 
+    - name: add host to mgmt cluster 
+      vmware_host:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        cluster_name: "{{mgtcluster}}"
+        datacenter_name: "{{datacenter}}"
+        esxi_hostname: "{{ item }}"
+        esxi_username: "root"
+        esxi_password: "Nicira123$"
+        validate_certs: no
+        state: present 
+      loop:
+        - "192.168.0.125"
+        - "192.168.0.126"
+
+    - name: add host to compute cluster
+      vmware_host:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        cluster_name: "{{compcluster}}"
+        datacenter_name: "{{datacenter}}"
+        esxi_hostname: "{{ item }}"
+        esxi_username: "root"
+        esxi_password: "Nicira123$"
+        validate_certs: no
+        state: present
+#        state: absent
+      loop:
+        - "192.168.0.127"
+        - "192.168.0.128"
+
+    - name: add host to v2t cluster
+      vmware_host:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        cluster_name: "{{v2tcluster}}"
+        datacenter_name: "{{datacenter}}"
+        esxi_hostname: "{{ item }}"
+        esxi_username: "root"
+        esxi_password: "Nicira123$"
+        validate_certs: no
+        state: present
+#        state: absent
+      loop:
+        - "192.168.0.137"
+        - "192.168.0.136"
+
+    - name: mount nfs datastore 
+      vmware_host_datastore:
+        hostname: "iotvc.rkc.local"
+        username: "administrator@rkc.local"
+        password: "Nicira123$"
+        datacenter_name: "{{datacenter}}"
+        datastore_name: "nsx_lab"
+        datastore_type: "nfs"
+        nfs_server: "192.168.0.96"
+        nfs_path: "/volume1/nsx_lab"
+        nfs_ro: no
+        esxi_hostname: "{{ item }}"
+        state: present 
+        validate_certs: no
+      loop:
+        - "192.168.0.125"
+        - "192.168.0.126"
+        - "192.168.0.127"                                                                                                                                          
+        - "192.168.0.128"
+        - "192.168.0.137"                                                                                                                                                                    
+        - "192.168.0.136"  

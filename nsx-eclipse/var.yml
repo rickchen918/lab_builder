@@ -1,0 +1,15 @@
+---
+m1:
+  name: eclipse-nsxmgr
+  ip: 192.168.0.102
+
+common:
+  mask: 255.255.255.0
+  gw: 192.168.0.1
+  ntp: time.stdtime.gov.tw
+  dns: 192.168.0.96
+  user: admin
+  password: VMware1!
+  size: small
+  datastore: nsx_lab
+  role: nsx-manager

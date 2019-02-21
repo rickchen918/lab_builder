@@ -31,15 +31,15 @@ data "vsphere_network" "network65" {
 
 /* refer this vm template to clone vm */
 data "vsphere_virtual_machine" "template" {
-/*  name = "esx67_ready_template" */
-  name = "esx65_ready_template"
+  name = "esx67_ready_template" 
+/*  name = "esx65_ready_template" */
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 /* create nested esx under cluster67 by linked clone */
 resource "vsphere_virtual_machine" "vm" {
-  count = 7
-  name = "iot-ESX${count.index}"
+  count = 2
+  name = "V2T-ESX${count.index}"
   resource_pool_id= "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id = "${data.vsphere_datastore.datastore.id}"
 

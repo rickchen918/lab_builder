@@ -1,0 +1,33 @@
+--- 
+- hosts: 127.0.0.1
+  vars_files: 
+    - ./var.yml
+  tasks: 
+    - name: deploy nsx manager1
+      command: ovftool 
+        --name={{m1.name}}
+        --X:injectOvfEnv 
+        --X:logFile=ovftool.log
+        --allowExtraConfig 
+        --datastore={{common.datastore}}
+        --network="home_mgmt" 
+        --acceptAllEulas 
+        --noSSLVerify 
+        --diskMode=thin 
+        --powerOn 
+        --prop:nsx_role="{{common.role}}"
+        --prop:nsx_ip_0={{m1.ip}}
+        --prop:nsx_netmask_0={{common.mask}}
+        --prop:nsx_gateway_0={{common.gw}} 
+        --prop:nsx_dns1_0={{common.dns}} 
+        --prop:nsx_domain_0=rkc.local 
+        --prop:nsx_ntp_0={{common.ntp}} 
+        --prop:nsx_isSSHEnabled=True 
+        --prop:nsx_allowSSHRootLogin=True
+        --prop:nsx_passwd_0={{common.password}} 
+        --prop:nsx_cli_passwd_0={{common.password}} 
+        --prop:nsx_hostname={{m1.name}}
+         /mnt/Software/VMware/NSX/2.3.1-EC/nsx-unified-appliance-2.3.1.0.0.11294305.ova
+        vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
+      tags: mgr
+

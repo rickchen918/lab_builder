@@ -1,15 +1,23 @@
 ---
 m1:
-  name: nsx24-mgr1
+  name: flash-rtqa35-mgr1
   ip: 192.168.0.140
 
 m2:
-  name: nsx24-mgr2
+  name: flash-rtqa35-mgr2
   ip: 192.168.0.141
 
 m3:
-  name: nsx24-mgr3
+  name: flash-rtqa35-mgr3
   ip: 192.168.0.142
+
+e1: 
+  name: flash-rtqa35-v2tedge1
+  ip: 192.168.0.146
+
+e2: 
+  name: flash-rtqa35-v2tedge2
+  ip: 192.168.0.147
 
 common:
   mask: 255.255.255.0
@@ -17,6 +25,9 @@ common:
   ntp: time.stdtime.gov.tw
   dns: 192.168.0.96
   user: admin
-  password: Nicira123$
+  password: "Nicira123$Nicira123$"
   size: small
-  
+  datastore: nsx_lab
+  role: nsx-manager nsx-controller
+  image: /mnt/Software/VMware/NSX/2.4Beta-FL/rtqa35/nsx-unified-appliance-2.4.0.0.0.12250681.ova
+  edgeimage: /mnt/Software/VMware/NSX/2.4Beta-FL/rtqa35/nsx-edge-2.4.0.0.0.12250733.ova
