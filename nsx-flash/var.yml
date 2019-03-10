@@ -1,22 +1,22 @@
 ---
 m1:
-  name: flash-rtqa35-mgr1
+  name: flash-24-mgr1
   ip: 192.168.0.140
 
 m2:
-  name: flash-rtqa35-mgr2
+  name: flash-24-mgr2
   ip: 192.168.0.141
 
 m3:
-  name: flash-rtqa35-mgr3
+  name: flash-24-mgr3
   ip: 192.168.0.142
 
 e1: 
-  name: flash-rtqa35-v2tedge1
+  name: flash-24-v2tedge1
   ip: 192.168.0.146
 
 e2: 
-  name: flash-rtqa35-v2tedge2
+  name: flash-24-v2tedge2
   ip: 192.168.0.147
 
 common:
@@ -29,5 +29,5 @@ common:
   size: small
   datastore: nsx_lab
   role: nsx-manager nsx-controller
-  image: /mnt/Software/VMware/NSX/2.4Beta-FL/rtqa35/nsx-unified-appliance-2.4.0.0.0.12250681.ova
+  image: /mnt/Software/VMware/NSX/2.4GA/nsx-unified-appliance-2.4.0.0.0.12456291.ova
   edgeimage: /mnt/Software/VMware/NSX/2.4Beta-FL/rtqa35/nsx-edge-2.4.0.0.0.12250733.ova

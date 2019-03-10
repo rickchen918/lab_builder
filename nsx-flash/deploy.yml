@@ -59,7 +59,7 @@
         --prop:nsx_cli_audit_passwd_0={{common.password}}
         "{{common.image}}"
         vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
-      tags: mgr2
+      tags: mgr
 
     - name: deploy nsx manager3
       command: ovftool
@@ -88,7 +88,7 @@
         --prop:nsx_cli_audit_passwd_0={{common.password}}
         "{{common.image}}"
         vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
-      tags: mgr2
+      tags: mgr	
 
     - name: deploy nsx edge1
       command: ovftool
@@ -151,3 +151,35 @@
         "{{common.edgeimage}}"
         vi://"administrator@rkc.local":"Nicira123$"@vc.rkc.local/Home/host/cluster67
       tags: edge
+
+    - name: get cluster id on t-mgr1 
+      raw: nsxcli -c get cluster status |grep Id |awk {'print $3'} 
+      register: id
+      delegate_to: "{{m1.ip}}"
+      tags: config
+
+    - name: get thumbprint on t-mgr1 
+      raw: nsxcli -c get certificate api thumbprint 
+      delegate_to: "{{m1.ip}}"
+      register: thumbprint
+      tags: config 
+
+    - debug: 
+        var: thumbprint
+      tags: config
+
+
+    - name: join controller cluster 
+      raw: join {{m1.ip}} cluster-id {{id.stdout_lines[0]}} username {{common.user}} password {{common.password}} thumbprint {{thumbprint.stdout_lines[0]}}
+      delegate_to: "{{item}}"
+      register: join
+      with_items: 
+        - "{{m2.ip}}"
+        - "{{m3.ip}}"
+      tags: config
+
+#    - debug: 
+#        var: join.stdout_lines
+#      tags: config
+
+ 
