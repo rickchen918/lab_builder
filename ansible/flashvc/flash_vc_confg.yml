@@ -85,6 +85,7 @@
         esxi_password: "Nicira123$"
         validate_certs: no
         state: present 
+      ignore_errors: yes
       loop:
         - "192.168.0.125"
         - "192.168.0.126"
@@ -101,7 +102,7 @@
         esxi_password: "Nicira123$"
         validate_certs: no
         state: present
-#        state: absent
+      ignore_errors: yes
       loop:
         - "192.168.0.127"
         - "192.168.0.128"
@@ -118,7 +119,7 @@
         esxi_password: "Nicira123$"
         validate_certs: no
         state: present
-#        state: absent
+      ignore_errors: yes
       loop:
         - "192.168.0.137"
         - "192.168.0.136"
@@ -142,7 +143,7 @@
       loop:
         - "192.168.0.125"
         - "192.168.0.126"
-        - "192.168.0.127"                                                                                                                                          
+        - "192.168.0.127"
         - "192.168.0.128"
         - "192.168.0.137"
         - "192.168.0.136"

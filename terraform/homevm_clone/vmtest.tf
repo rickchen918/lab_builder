@@ -20,7 +20,7 @@ data "vsphere_compute_cluster" "cluster1" {
 }
 
 data "vsphere_network" "network" {
-  name = "VM Network"
+  name = "home_mgmt"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -31,13 +31,13 @@ data "vsphere_virtual_machine" "template" {
 }
 
 resource "vsphere_virtual_machine" "vm1" {
-  count = 3
-  name = "nsx_baremetal${count.index}"
+  count = 1
+  name = "nsxQE${count.index}"
   resource_pool_id= "${data.vsphere_compute_cluster.cluster1.resource_pool_id}"
   datastore_id = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus = 2
-  memory = 2048
+  memory = 8192
   guest_id = "ubuntu64Guest"
   wait_for_guest_net_timeout = 0
 

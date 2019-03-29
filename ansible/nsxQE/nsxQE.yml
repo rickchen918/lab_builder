@@ -1,0 +1,38 @@
+---
+- hosts: tool
+  tasks: 
+  - name: apt-get update 
+    apt:
+      update_cache: yes
+
+  - name: update kvm pre-request packages 
+    apt:
+      name: "{{packages}}"
+    vars:
+      packages:
+        - nfs-common
+        - iperf 
+        - ansible  
+        - git 
+        - python-requests
+        - ipython
+
+  - name: git clone T-REX
+    git: 
+      repo: https://github.com/cisco-system-traffic-generator/trex-core.git
+      dest: ~/trex
+
+  - name: git clone nsxt_validate 
+    git: 
+      repo: https://github.com/rickchen918/nsxt_validate.git
+      dest: ~/nsxt_validate
+
+  - name: git clone lab_build 
+    git: 
+      repo: https://github.com/rickchen918/lab_builder.git
+      dest: ~/lab_builder
+
+  - name: download terraform package 
+    get_url: 
+      url: https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
+      dest: ~/terraform 

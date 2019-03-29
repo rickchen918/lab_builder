@@ -25,7 +25,7 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_network" "network65" {
-  name = "65-0"
+  name = "Trunk"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 

@@ -1,0 +1,96 @@
+---
+- hosts: kvm
+  tasks: 
+  - name: apt-get update q
+    apt:
+      update_cache: yes
+
+  - name: update kvm pre-request packages 
+    apt:
+      name: "{{packages}}"
+    vars:
+      packages:
+        - qemu-kvm
+        - libvirt-bin
+        - ubuntu-vm-builder
+        - bridge-utils
+        - virtinst
+        - virt-manager
+        - virt-viewer
+        - libguestfs-tools
+        - libboost-chrono1.58.0
+        - libboost-filesystem1.58.0
+        - libgoogle-glog0v5
+        - libgoogle-perftools4
+        - libprotobuf9v5
+        - traceroute
+        - python-mako
+        - python-netaddr
+        - python-simplejson
+        - python-unittest2
+        - python-yaml
+        - python-openssl
+        - libboost-date-time1.58.0
+        - libleveldb1v5
+        - python-gevent
+        - python-protobuf
+        - dkms
+        - libboost-program-options1.58.0
+        - nfs-common 
+
+  - name: nfs storage mount for resource 
+    raw: mount 192.168.0.96:/volume2/RKC-Home /mnt
+    tags: storage
+
+  - name: nfs storage mount for vm 
+    raw: mount 192.168.0.96:/volume1/nsx_lab /var/lib/libvirt/images
+    tags: storage
+
+  - name: check ovsnet file existing 
+    stat:
+      path: ./ovsnet
+    register: file
+    tags: ovsnet
+
+  - debug: 
+      var: file
+    tags: ovsnet
+
+
+  - name: create bridge template for vm connect
+    shell: echo "{{item}}" >> ovsnet
+    with_items:
+      - <network>
+      - <name>ovsnet</name>
+      - <forward mode='bridge'/>
+      - <bridge name='nsx-managed'/>
+      - <virtualport type='openvswitch'>
+      - </virtualport>
+      - </network>
+    when: file.stat.exists == false
+    tags: ovsnet
+
+  - name: verify bridging option exist or not 
+    shell: virsh net-list --all |grep ovsnet
+    ignore_errors: yes
+    register: net
+    tags: ovsnet
+
+  - debug: 
+      var: net
+    tags: ovsnet
+
+  - name: define bridge file as bridge option
+    shell: virsh net-define ovsnet
+    when: net.stdout==""
+    tags: ovsnet
+
+  - name: autostart the option
+    shell: virsh net-autostart ovsnet
+    when: net.stdout==""
+    tags: ovsnet
+
+  - name: start the option
+    shell: virsh net-start ovsnet
+    when: net.stdout==""
+    tags: ovsnet

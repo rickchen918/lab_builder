@@ -9,7 +9,7 @@
         --X:injectOvfEnv 
         --X:logFile=ovftool.log
         --allowExtraConfig 
-        --datastore="{{common.datastore}}"
+        --datastore={{common.datastore}}
         --network="home_mgmt" 
         --acceptAllEulas 
         --noSSLVerify 
@@ -38,7 +38,7 @@
         --X:injectOvfEnv
         --X:logFile=ovftool.log
         --allowExtraConfig
-        --datastore="{{common.datastore}}"
+        --datastore={{common.datastore}}
         --network="home_mgmt"
         --acceptAllEulas
         --noSSLVerify
@@ -67,7 +67,7 @@
         --X:injectOvfEnv
         --X:logFile=ovftool.log
         --allowExtraConfig
-        --datastore="{{common.datastore}}"
+        --datastore={{common.datastore}}
         --network="home_mgmt"
         --acceptAllEulas
         --noSSLVerify
@@ -97,7 +97,7 @@
         --X:injectOvfEnv 
         --X:logFile=ovftool.log 
         --allowExtraConfig 
-        --datastore="{{common.datastore}}"
+        --datastore={{common.datastore}}
         --net:"Network 0=home_mgmt" 
         --net:"Network 1=Trunk" 
         --net:"Network 2=Trunk"  
@@ -128,7 +128,7 @@
         --X:injectOvfEnv 
         --X:logFile=ovftool.log 
         --allowExtraConfig 
-        --datastore="{{common.datastore}}"
+        --datastore={{common.datastore}}
         --net:"Network 0=home_mgmt" 
         --net:"Network 1=Trunk" 
         --net:"Network 2=Trunk"  
