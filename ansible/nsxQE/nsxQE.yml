@@ -5,12 +5,12 @@
     apt:
       update_cache: yes
 
-  - name add repository of last repository
-    apt-repository:
+  - name: addn ansible repository 
+    apt_repository:
       repo: ppa:ansible/ansible
       state: present
 
-  - name: update kvm pre-request packages 
+  - name: update pre-request packages 
     apt:
       name: "{{packages}}"
     vars:
