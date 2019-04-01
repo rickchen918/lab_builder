@@ -5,6 +5,11 @@
     apt:
       update_cache: yes
 
+  - name add repository of last repository
+    apt-repository:
+      repo: ppa:ansible/ansible
+      state: present
+
   - name: update kvm pre-request packages 
     apt:
       name: "{{packages}}"
@@ -16,11 +21,9 @@
         - git 
         - python-requests
         - ipython
-
-  - name: git clone T-REX
-    git: 
-      repo: https://github.com/cisco-system-traffic-generator/trex-core.git
-      dest: ~/trex
+        - open-vm-tools
+        - ssh-askpass
+        - software-properties-common
 
   - name: git clone nsxt_validate 
     git: 
@@ -32,7 +35,19 @@
       repo: https://github.com/rickchen918/lab_builder.git
       dest: ~/lab_builder
 
+  - name: make trex use folder 
+    file: 
+      path: ~/trex
+      state: directory
+
+  - name: download trex packages and unarchive file
+    unarchive:
+      src: http://trex-tgn.cisco.com/trex/release/v2.53.tar.gz
+      dest: ~/trex
+      remote_src: yes
+
   - name: download terraform package 
     get_url: 
       url: https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
       dest: ~/terraform 
+
