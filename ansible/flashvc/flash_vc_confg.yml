@@ -132,10 +132,10 @@
         username: "administrator@rkc.local"
         password: "Nicira123$"
         datacenter_name: "{{datacenter}}"
-        datastore_name: "nsx_lab"
+        datastore_name: "ssd_lab"
         datastore_type: "nfs"
         nfs_server: "192.168.0.96"
-        nfs_path: "/volume1/nsx_lab"
+        nfs_path: "/volume3/ssd_lab"
         nfs_ro: no
         esxi_hostname: "{{ item }}"
         state: present 

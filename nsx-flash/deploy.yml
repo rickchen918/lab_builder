@@ -182,4 +182,22 @@
 #        var: join.stdout_lines
 #      tags: config
 
- 
+- hosts: nsxtn
+# if there is no "gather_fact" to be used, it return error on command not found?"
+  gather_facts: no
+  vars_files:
+    - ./var.yml
+  tasks:
+     - name: set syslog server on nsx-t components 
+       raw: set logging-server {{common.syslog}} proto li level debug 
+       tags: tnlog
+
+- hosts: nsxhv
+  gather_facts: no
+  vars_files:
+    - ./var.yml
+  tasks: 
+    - name: set syslog on esx host 
+      raw: esxcli system syslog config set --loghost={{common.syslog}} 
+      tags: hvlog
+  

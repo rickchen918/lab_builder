@@ -1,4 +1,0 @@
-the content of local.sh steps to remove the duplicated id information inside of VM. 
-It can be useable in vCenter
-
-thie terraform file is to provision vesx for flash release testing 

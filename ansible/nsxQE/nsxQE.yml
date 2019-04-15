@@ -10,20 +10,25 @@
       repo: ppa:ansible/ansible
       state: present
 
-  - name: update pre-request packages 
+  - name: upgrade linux header for trex 2.5.3
+    raw: apt-get install linux-headers-`uname -r`
+
+  - name: install pre-request packages 
     apt:
       name: "{{packages}}"
     vars:
       packages:
         - nfs-common
         - iperf 
-        - ansible  
         - git 
         - python-requests
         - ipython
         - open-vm-tools
         - ssh-askpass
         - software-properties-common
+        - build-essential
+        - ansible
+      tags: pkg
 
   - name: git clone nsxt_validate 
     git: 

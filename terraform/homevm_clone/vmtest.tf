@@ -10,7 +10,7 @@ data "vsphere_datacenter" "dc" {
 }
 
 data "vsphere_datastore" "datastore" {
-  name = "nsx_lab"
+  name = "ssd_lab"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -24,9 +24,14 @@ data "vsphere_network" "network" {
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
+data "vsphere_network" "network1" {
+  name = "Trunk"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
 /* refer this vm template to clone vm */
 data "vsphere_virtual_machine" "template" {
-  name = "ubuntu1604_temp"
+  name = "utemplate-onSSD"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -37,6 +42,7 @@ resource "vsphere_virtual_machine" "vm1" {
   datastore_id = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus = 2
+  /*nested_hv_enabled = true*/
   memory = 8192
   guest_id = "ubuntu64Guest"
   wait_for_guest_net_timeout = 0
@@ -46,7 +52,7 @@ resource "vsphere_virtual_machine" "vm1" {
   }
 
   network_interface {                                                                                                                                              
-    network_id = "${data.vsphere_network.network.id}"                                                                                                              
+    network_id = "${data.vsphere_network.network1.id}"                                                                                                              
   }
 
   disk {

@@ -43,7 +43,7 @@
     tags: storage
 
   - name: nfs storage mount for vm 
-    raw: mount 192.168.0.96:/volume1/nsx_lab /var/lib/libvirt/images
+    raw: mount 192.168.0.96:/volume3/ssd_lab /var/lib/libvirt/images
     tags: storage
 
   - name: check ovsnet file existing 
@@ -94,3 +94,16 @@
     shell: virsh net-start ovsnet
     when: net.stdout==""
     tags: ovsnet
+
+  - name: enable vnc to accept all connection 
+    lineinfile: 
+      dest: /etc/libvirt/qemu.conf
+      regexp: '#vnc_listen = "0.0.0.0"'
+      line: 'vnc_listen = "0.0.0.0"'
+    tags: vnc
+
+  - name: restart libvirt service 
+    service: 
+      name: libvirtd
+      state: restarted
+    tags: libvirt

@@ -1,0 +1,14 @@
+---
+- hosts: nsxtn 
+  gather_facts: no
+  vars_files:
+    - ./var.yml
+  tasks:
+    - name: get lsw 
+      raw: get logical-switches
+      register: test 
+      ignore_errors: true
+
+    - debug: 
+        var: test
+ 
