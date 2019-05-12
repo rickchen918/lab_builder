@@ -125,6 +125,7 @@
         - "192.168.0.136"
         - "192.168.0.138"
         - "192.168.0.139"
+      tags: v2t
 
     - name: mount nfs datastore 
       vmware_host_datastore:

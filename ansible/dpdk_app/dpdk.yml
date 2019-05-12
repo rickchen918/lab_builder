@@ -1,0 +1,51 @@
+- hosts: tool
+  tasks: 
+  - name: update resolv.conf for dns 
+    shell: echo "nameserver 192.168.0.96" >> /etc/resolv.conf
+
+  - name: apt-get update 
+    apt:
+      update_cache: yes
+
+  - name: addn ansible repository 
+    apt_repository:
+      repo: ppa:ansible/ansible
+      state: present
+
+  - name: upgrade linux header for trex 2.5.3
+    raw: apt-get install linux-headers-`uname -r`
+
+  - name: download dpdk app
+    get_url: 
+      url: https://fast.dpdk.org/rel/dpdk-18.05.1.tar.xz
+      dest: ~/
+      validate_certs: no
+      
+  - name: install pre-request packages 
+    apt:
+      name: "{{packages}}"
+    vars:
+      packages:
+        - build-essential
+        - libpcap-dev
+        - libnuma-dev
+
+  - name: make config definition 
+    command: make config T=x86_64-native-linuxapp-gcc
+    register: makeconf
+
+  - name: make install 
+    command: make install T=x86_64-native-linuxapp-gcc  DESTDIR=build 
+    register: install
+
+  - name: environment var setup 
+    command: "{{packages}}"
+    vars:
+       packages:
+         - echo "export RTE_SDK=/root/dpdk-stable-18.05.1/" >> ~/.profile
+         - echo "export RTE_TARGET=x86_64-native-linuxapp-gcc" >> ~/.profile
+    tags: env
+
+
+  - name: compile l2 forwarding feature 
+    command: chdir=~/dpdk-stable-18.05.1/examples/l2fwd make

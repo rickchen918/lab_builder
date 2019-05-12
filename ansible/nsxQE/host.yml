@@ -1,5 +1,5 @@
 
 [tool]
-192.168.0.215 ansible_ssh_user=root  ansible_ssh_pass=nicira123 ansible_sudo=yes
+192.168.0.205 ansible_ssh_user=root  ansible_ssh_pass=nicira123 ansible_sudo=yes
 
 

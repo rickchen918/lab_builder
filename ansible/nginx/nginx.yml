@@ -1,0 +1,68 @@
+---
+- hosts: tool
+  tasks: 
+  - name: update resolv.conf for dns 
+    shell: echo "nameserver 192.168.0.96" >> /etc/resolv.conf
+
+  - name: apt update cache 
+    apt:
+      update_cache=yes 
+
+  - name: install pre-request packages 
+    apt:
+      name: "{{packages}}"
+    vars:
+      packages:
+        - nginx
+#        - apache2
+        - apache2-utils
+        - python-passlib
+      tags: pkg
+
+  - name: set apache2 login username and password 
+    htpasswd: 
+      path: /etc/nginx/.htpasswd
+      name: vmware
+      password: vmware
+      state: present
+
+  - name: enable basic authentication on nginx 
+    lineinfile: 
+      path: /etc/nginx/sites-enabled/default 
+      insertafter: try_files $uri $uri/ =404;
+      line: "{{ item }}"
+    with_items:
+      - auth_basic_user_file /etc/nginx/.htpasswd;
+      - auth_basic "Restricted Content";
+
+  - name: restart nginx service
+    service:
+      name: nginx
+      state: restarted
+
+
+#  - name: enable apache authentication 
+#    lineinfile:
+#      path: /etc/apache2/sites-enabled/000-default.conf
+#      insertafter: serve-cgi-bin.conf
+#      line: "{{ item }}"
+#    with_items:
+#      - </Directory>
+#      - AuthType Basic
+#      - AuthName "Restricted Content"
+#      - AuthUserFile /etc/apache2/.htpasswd
+#      - Require valid-user
+#      - <Directory "/var/www/html">
+#    tags: auth
+
+#  - name: restart apache server 
+#    service: 
+#      name: apache2
+#      state: restarted
+#    tags: svc
+
+#  - name: uninstall svc 
+#    apt: 
+#      name: apache2
+#      state: absent 
+#    tags: uninstall

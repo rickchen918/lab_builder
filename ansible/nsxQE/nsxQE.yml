@@ -28,7 +28,9 @@
         - software-properties-common
         - build-essential
         - ansible
+        - apache2
         - apache2-utils
+        - fping 
       tags: pkg
 
   - name: git clone nsxt_validate 
