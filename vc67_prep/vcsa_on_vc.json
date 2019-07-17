@@ -17,7 +17,7 @@
             "datacenter": [
                 "Home"
             ],
-            "datastore": "nsx_lab",
+            "datastore": "ssd_lab",
             "target": [
                 "cluster67"
             ]
@@ -28,7 +28,7 @@
             ],
             "thin_disk_mode": true,
             "deployment_option": "small",
-            "name": "iotvc"
+            "name": "lab_iotvc"
         },
         "network": {
             "ip_family": "ipv4",

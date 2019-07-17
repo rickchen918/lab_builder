@@ -107,25 +107,25 @@
         - "192.168.0.127"
         - "192.168.0.128"
 
-    - name: add host to v2t cluster
-      vmware_host:
-        hostname: "iotvc.rkc.local"
-        username: "administrator@rkc.local"
-        password: "Nicira123$"
-        cluster_name: "{{v2tcluster}}"
-        datacenter_name: "{{datacenter}}"
-        esxi_hostname: "{{ item }}"
-        esxi_username: "root"
-        esxi_password: "Nicira123$"
-        validate_certs: no
-        state: present
-      ignore_errors: yes
-      loop:
-        - "192.168.0.137"
-        - "192.168.0.136"
-        - "192.168.0.138"
-        - "192.168.0.139"
-      tags: v2t
+#    - name: add host to v2t cluster
+#      vmware_host:
+#        hostname: "iotvc.rkc.local"
+#        username: "administrator@rkc.local"
+#        password: "Nicira123$"
+#        cluster_name: "{{v2tcluster}}"
+#        datacenter_name: "{{datacenter}}"
+#        esxi_hostname: "{{ item }}"
+#        esxi_username: "root"
+#        esxi_password: "Nicira123$"
+#        validate_certs: no
+#        state: present
+#      ignore_errors: yes
+#      loop:
+#        - "192.168.0.137"
+#        - "192.168.0.136"
+#        - "192.168.0.138"
+#        - "192.168.0.139"
+#      tags: v2t
 
     - name: mount nfs datastore 
       vmware_host_datastore:
@@ -146,7 +146,7 @@
         - "192.168.0.126"
         - "192.168.0.127"
         - "192.168.0.128"
-        - "192.168.0.137"
-        - "192.168.0.136"
-        - "192.168.0.138"
-        - "192.168.0.139"
+ #       - "192.168.0.137"
+ #       - "192.168.0.136"
+ #       - "192.168.0.138"
+ #       - "192.168.0.139"

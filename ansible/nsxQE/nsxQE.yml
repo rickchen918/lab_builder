@@ -10,6 +10,10 @@
       repo: ppa:ansible/ansible
       state: present
 
+  - name: apt-get update
+    apt:
+      update_cache: yes
+
   - name: upgrade linux header for trex 2.5.3
     raw: apt-get install linux-headers-`uname -r`
 
@@ -31,6 +35,9 @@
         - apache2
         - apache2-utils
         - fping 
+        - build-essential
+        - libpcap-dev 
+        - libnuma-dev
       tags: pkg
 
   - name: git clone nsxt_validate 
