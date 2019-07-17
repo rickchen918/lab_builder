@@ -1,0 +1,9 @@
+ee9269fdc02a4d2c18cf8cdcc314fed0515499c0		branch 'assets' of https://github.com/chzyer/readline
+5197e2b2ba43e1081d7c49654161374275c35cda		branch 'bugfix/fix_deadlock_in_cancelablestdin' of https://github.com/chzyer/readline
+5ac508ded8d4a5e60f8b66c22d223ae7c15c6152		branch 'feature/add_history_equal_fold' of https://github.com/chzyer/readline
+2972be24d48e78746da79ba8e24e8b488c9880de		branch 'master' of https://github.com/chzyer/readline
+c73eba9879cde6b5d3dc0677abe9ce4d916962da		tag 'v1.0' of https://github.com/chzyer/readline
+15a38309e66dde7be211ea063bbb4eb5cd721d96		tag 'v1.1' of https://github.com/chzyer/readline
+14e9df7f3c68bca64f111bab38196975d4696e2f		tag 'v1.2' of https://github.com/chzyer/readline
+64a71f22be412fa183322657872f81a757eb8665		tag 'v1.3' of https://github.com/chzyer/readline
+62c6fe6193755f722b8b8788aa7357be55a50ff1		tag 'v1.4' of https://github.com/chzyer/readline

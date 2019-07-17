@@ -1,0 +1,9 @@
+cb2f20eb0fd62059cf58b24de16a6eb5c6401bfd		branch 'f-dynblock' of https://github.com/hashicorp/hcl2
+c784bb67d0135dc6755270b6d209fb52d1d0c0ad		branch 'f-hclwrite-redux' of https://github.com/hashicorp/hcl2
+fbc92a98ad8680d6e52d8da3c20ed15a418c603d		branch 'f-hclwrite-setattrs' of https://github.com/hashicorp/hcl2
+57c9a676d7c4540f9eb4cfc84d977323d3341460		branch 'guide' of https://github.com/hashicorp/hcl2
+dcefc5ca241e9b35127f2c2b99bc0aed37e72720		branch 'hclpack' of https://github.com/hashicorp/hcl2
+da6336fc625a40ffc87ec98cd22e3f9a265a0896		branch 'hclwrite-clear-comments' of https://github.com/hashicorp/hcl2
+fdf8e232b64f68d5335fa1be449b0160dadacdb5		branch 'master' of https://github.com/hashicorp/hcl2
+ef5c50bb09fea833b08041c7de76883dd2b3edb0		branch 'specsuite' of https://github.com/hashicorp/hcl2
+3e1d562d6dea1d357c5ed8c054ef650996494d48		branch 'svh/f-defaults' of https://github.com/hashicorp/hcl2

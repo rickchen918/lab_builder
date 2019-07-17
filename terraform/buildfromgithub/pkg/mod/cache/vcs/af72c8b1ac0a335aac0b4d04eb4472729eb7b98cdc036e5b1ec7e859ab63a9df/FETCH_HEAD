@@ -1,0 +1,15 @@
+bfc5b4af08f3d3745d908af36b7ed5b9060f0258		branch 'latest-version-with-https-fork' of https://github.com/masterzen/azure-sdk-for-go
+ee4f0065d00cd12b542f18f5bc45799e88163b12		branch 'master' of https://github.com/masterzen/azure-sdk-for-go
+eef75a8d51eafd5ea0f8ccf136d3d65b0ddd8e14		tag 'v0.2.0-beta' of https://github.com/masterzen/azure-sdk-for-go
+1988e0c0d49caab23bdcd79a2e39b66bf38c7812		tag 'v1.0' of https://github.com/masterzen/azure-sdk-for-go
+8a1a75ea799cf192c545d70d146dc2a66bb332a7		tag 'v1.1' of https://github.com/masterzen/azure-sdk-for-go
+0fbd37144de3adc2aef74db867c0e15e41c7f74a		tag 'v1.2' of https://github.com/masterzen/azure-sdk-for-go
+40913ba2258014bcbff5f4232089662493b7b8b3		tag 'v2.0.0-beta' of https://github.com/masterzen/azure-sdk-for-go
+16faded70c4bea1bb2ff0f143439a193fb37e799		tag 'v2.1.0-beta' of https://github.com/masterzen/azure-sdk-for-go
+0c32991e53da0b7547a7dabf1cb218d46cf52303		tag 'v2.1.1-beta' of https://github.com/masterzen/azure-sdk-for-go
+1278407910692e3c9c277617b1fffd8f35ca5021		tag 'v2.2.0-beta' of https://github.com/masterzen/azure-sdk-for-go
+77252b52c3ec5178a494e34aa042e652d856f08f		tag 'v3.0.0-beta' of https://github.com/masterzen/azure-sdk-for-go
+0f9f727f89fe58c415ec978eb2d74c8c815768de		tag 'v3.1.0-beta' of https://github.com/masterzen/azure-sdk-for-go
+71751e6948a5210d998de0b68514c5c560f120d8		tag 'v3.2.0-beta' of https://github.com/masterzen/azure-sdk-for-go
+82675643e47caf044672c7e516579150b50c27d8		tag 'v4.0.0-beta' of https://github.com/masterzen/azure-sdk-for-go
+91f3d4a4d024e3c0d4d9412916d05cf84504a616		tag 'v5.0.0-beta' of https://github.com/masterzen/azure-sdk-for-go

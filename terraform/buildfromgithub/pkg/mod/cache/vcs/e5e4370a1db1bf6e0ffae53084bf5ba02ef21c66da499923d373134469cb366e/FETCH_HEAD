@@ -1,0 +1,6 @@
+132fdc66d3bc536229dff71411411c06ee376aa1		branch 'cycles' of https://github.com/google/go-cmp
+a823945b37dd76caebe4af9b00aa801b7cac4526		branch 'export-prefix' of https://github.com/google/go-cmp
+6f77996f0c42f7b84e5a2b252227263f93432e9b		branch 'master' of https://github.com/google/go-cmp
+5b174e060e6b0940821c3aabca20817defe05867		branch 'priority' of https://github.com/google/go-cmp
+8099a9787ce5dc5984ed879a3bda47dc730a8e97		tag 'v0.1.0' of https://github.com/google/go-cmp
+3af367b6b30c263d47e8895973edcca9a49cf029		tag 'v0.2.0' of https://github.com/google/go-cmp

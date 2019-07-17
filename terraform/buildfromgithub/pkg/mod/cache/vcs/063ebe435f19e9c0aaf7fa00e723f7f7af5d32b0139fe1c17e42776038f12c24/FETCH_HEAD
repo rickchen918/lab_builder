@@ -1,0 +1,4 @@
+b1ffbfed48aaba3a3154d13aac7d455cca44319f		branch 'ignore-signal' of https://github.com/hashicorp/go-plugin
+20341d70f4ff9e1bbe3a2b7006d218f6c4160914		branch 'jbardin/terraform-alpha' of https://github.com/hashicorp/go-plugin
+66f27698090073e65eaff4a874915dfbdf75bee1		branch 'logging-no-name' of https://github.com/hashicorp/go-plugin
+3f118e8ee104b6f22aeb12453fab56aed1356186		branch 'master' of https://github.com/hashicorp/go-plugin

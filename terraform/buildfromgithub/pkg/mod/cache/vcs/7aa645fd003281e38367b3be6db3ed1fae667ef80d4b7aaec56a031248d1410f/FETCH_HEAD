@@ -1,0 +1,4 @@
+73eb3ba4b5c59d22c7fe5f031865464102c31944		branch 'config-sig-file-perms' of https://github.com/hashicorp/go-checkpoint
+bbe6c410aa4be4194cb490a2bde8c3c33f295541		branch 'master' of https://github.com/hashicorp/go-checkpoint
+ea3b060af4178efd6ead9fdfbc27a77732a932b7		branch 'short-version-check-timeout' of https://github.com/hashicorp/go-checkpoint
+bbe6c410aa4be4194cb490a2bde8c3c33f295541		tag 'v0.5.0' of https://github.com/hashicorp/go-checkpoint

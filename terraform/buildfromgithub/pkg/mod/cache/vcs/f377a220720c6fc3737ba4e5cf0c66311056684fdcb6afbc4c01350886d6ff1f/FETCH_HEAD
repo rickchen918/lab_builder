@@ -1,0 +1,8 @@
+27de0b2e5e8ca4d3d9c41bbd07fd19558d5c896b		branch 'b-vet-vendor-pkg-names' of https://github.com/hashicorp/go-hclog
+26977bae65b58f7f04534e1d43b4c3652467c3f7		branch 'comment-fix' of https://github.com/hashicorp/go-hclog
+4fe21a20bdac9e79f0ddc1e8e1cb9479ff6ccc34		branch 'f-fmt' of https://github.com/hashicorp/go-hclog
+a8e98263be85b155330d68ad42ecf9a5d762a026		branch 'f-helper' of https://github.com/hashicorp/go-hclog
+6907afbebd2eef854f0be9194eb79b0ba75d7b29		branch 'master' of https://github.com/hashicorp/go-hclog
+64ba44e85dd370a9ac84c7ec809fe9b403d5d41d		branch 'with-fixes' of https://github.com/hashicorp/go-hclog
+90f2fbc4844c54471c74c1395e1d06ce0582ec59		tag 'v0.7.0' of https://github.com/hashicorp/go-hclog
+6907afbebd2eef854f0be9194eb79b0ba75d7b29		tag 'v0.8.0' of https://github.com/hashicorp/go-hclog

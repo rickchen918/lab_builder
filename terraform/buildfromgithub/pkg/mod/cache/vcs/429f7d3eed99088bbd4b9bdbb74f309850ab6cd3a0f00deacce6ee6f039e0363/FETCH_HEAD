@@ -1,0 +1,4 @@
+2705dc94ad2642f1eee260ff6d4d36f08171cb45		branch 'feature/add-version-system' of https://github.com/masterzen/winrm
+db558fdaeaff9dc7bbc918ad9ae6408f1ec2d028		branch 'fix/60-use-azure-fork' of https://github.com/masterzen/winrm
+e64eec857321b0ddea116644fa77405d1efae80a		branch 'fix/go1.4-travis' of https://github.com/masterzen/winrm
+1d17eaf15943ca3554cdebb3b1b10aaa543a0b7e		branch 'master' of https://github.com/masterzen/winrm

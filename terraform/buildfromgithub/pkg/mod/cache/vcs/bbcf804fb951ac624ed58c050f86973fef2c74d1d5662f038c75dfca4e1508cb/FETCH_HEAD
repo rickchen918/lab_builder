@@ -1,0 +1,4 @@
+79a4fe6eccd62c5e9a7c5456c2100d9170e01cd0		branch 'elevated_info_query' of https://github.com/packer-community/winrmcp
+d0ed5bd788d2d8d9dcd9479a4a9472e30433e1ad		branch 'handle_quotes_in_paths' of https://github.com/packer-community/winrmcp
+c76d91c1e7db27b0868c5d09e292bb540616c9a2		branch 'master' of https://github.com/packer-community/winrmcp
+19ec1ad8f2c6e3d243ac156adcf816de172c189f		branch 'max_commands_per_shell' of https://github.com/packer-community/winrmcp
