@@ -1,0 +1,7 @@
+nsx_manager = "192.168.0.102"
+nsx_username = "admin"
+nsx_password = "Nicira123$"
+t0_name = "k8s-t0"
+tz = "overlay"
+edgecluster = "edge_cluster"
+count = "1"

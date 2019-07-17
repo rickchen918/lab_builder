@@ -1,0 +1,14 @@
+7b02c991a3bd48d363305fdc5893d542b9d50438		branch 'dev-appserver-request-id' of https://github.com/golang/appengine
+d873c45d378d4a28fb6d5aef90dec507f06f833a		branch 'drop-pre-18' of https://github.com/golang/appengine
+745416c1ae1cfd1c0809adb99de142755ef7bfdf		branch 'fixblobstore' of https://github.com/golang/appengine
+62766a5bc5a1e6a061b6db4dd6cf5d544f6f0d05		branch 'fixdatastore' of https://github.com/golang/appengine
+c7ea1093b8fcfc903f94b56a0a3eb5489d95d903		branch 'flexctx' of https://github.com/golang/appengine
+43a8c577d35250b2caed2f348f412d9552c24682		branch 'gaego' of https://github.com/golang/appengine
+54a98f90d1c46b7731eb8fb305d2a321c30ef610		branch 'master' of https://github.com/golang/appengine
+02a77d22859c7ddf3805884d2472d471b8cd1b37		branch 'revert-90-feature/enable-to-set-query-batch-size' of https://github.com/golang/appengine
+ea4b8bae2cec5434a649a4f5cf488d9ed6177086		branch 'update-go-mod' of https://github.com/golang/appengine
+150dc57a1b433e64154302bdc40b6bb8aefa313a		tag 'v1.0.0' of https://github.com/golang/appengine
+d97a4500c1526d20821d2068ff963f4a548b4554		tag 'v1.1.0' of https://github.com/golang/appengine
+751d2ab5704319bb81cc956c272b9f479742b41c		tag 'v1.2.0' of https://github.com/golang/appengine
+1a772930169c3d858451719e1963cb3e5a60f0bf		tag 'v1.3.0' of https://github.com/golang/appengine
+15b7394f9abc7ef466bc388559f6c0127e336023		tag 'v1.4.0' of https://github.com/golang/appengine

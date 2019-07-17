@@ -1,0 +1,8 @@
+the terraform script here is developed for testing environment 
+
+	- create dhcp profile 
+	- create dhcp server which is on terraform_ls_0 and ip address on 192.17.0.1/24 and multiple ip pools 
+	- create dhcp rely profile to 192.17.0.1 
+	- create dhcp rely service 
+	- create logical switches
+	- create logical T1 routers and attach dhcp rely service for multiple subnets 
