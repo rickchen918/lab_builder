@@ -1,0 +1,32 @@
+---
+- hosts: 127.0.0.1
+  gather_facts: no
+  vars_files:
+    - ./var.yml
+  tasks: 
+#    - name: get 1st manager cluster id 
+#      raw: "nsxcli -c get cluster config |grep Id |awk {'print $3'}"
+#      register: clusterId
+#      delegate_to: "{{m1.ip}}"
+
+    - name: get 1st manager cluster id
+      raw: get cluster config |find Id
+      register: clusterId
+      delegate_to: "{{m1.ip}}"
+ 
+    - name: get 1st manager thumbprint 
+      raw: nsxcli -c get certificate api thumbprint 
+      register: thumbprint
+      delegate_to: "{{m1.ip}}"
+
+# something wrong here
+    - debug:
+        var: clusterId.stdout_lines.split(":")[1]
+
+    - name: join
+      raw: get interfaces
+      register: test
+      delegate_to: "{{m2.ip}}"
+
+    - debug:
+        var: test

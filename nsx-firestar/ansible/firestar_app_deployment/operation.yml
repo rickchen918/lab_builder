@@ -1,0 +1,17 @@
+---
+- hosts: nsxtn
+  gather_facts: no
+  vars_files:
+    - ./var.yml
+  tasks:
+    - name: set route to lab network 
+      raw: set route prefix 192.168.64.0/18 gateway 192.168.0.59
+      register: test 
+      ignore_errors: true
+
+    - debug: 
+        var: test
+
+    - name: set logging server 
+      raw: set logging-server 192.168.0.52:514 proto udp level info
+ 

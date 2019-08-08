@@ -1,0 +1,34 @@
+---
+m1:
+  name: fsmgr1
+  ip: 192.168.0.150
+
+m2:
+  name: fsmgr2
+  ip: 192.168.0.151
+
+m3:
+  name: fsmgr3
+  ip: 192.168.0.152
+
+e1: 
+  name: fsedge1
+  ip: 192.168.0.153
+
+e2: 
+  name: fsedge2
+  ip: 192.168.0.154
+
+common:
+  mask: 255.255.255.0
+  gw: 192.168.0.1
+  ntp: time.stdtime.gov.tw
+  dns: 192.168.0.96
+  user: admin
+  password: "Nicira123$Nicira123$"
+  size: small
+  datastore: ssd_lab
+  role: NSX Manager
+  image: /mnt/Software/VMware/NSX/2.5Beta/nsx-unified-appliance-2.5.0.0.0.14133236.ova
+  edgeimage: /mnt/Software/VMware/NSX/2.4GA/nsx-edge-2.4.0.0.0.12454265.ova 
+  syslog: 192.168.0.52

@@ -1,0 +1,7 @@
+nsx_manager = "192.168.0.140"
+nsx_username = "admin"
+nsx_password = "Nicira123$Nicira123$"
+t0_name = "AS-T0"
+tz = "overlay"
+edgecluster = "AS-Edge-Cluster"
+count = "5"
